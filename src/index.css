@@ -1,0 +1,249 @@
+:root {
+  --color-primary: #3b82f6;
+  --color-primary-light: #60a5fa;
+  --color-primary-dark: #2563eb;
+  --color-primary-rgb: 59, 130, 246;
+  --color-primary-container: #d7edff;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #001e30;
+  --color-inverse-primary: #90ccff;
+
+  /* Colors - Secondary */
+  --color-secondary: #475569;
+  --color-secondary-dark: #334155;
+
+  /* Colors - Error */
+  --color-error: #ef4444;
+  --color-error-container: #fee2e2;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #991b1b;
+
+  /* Colors - Emergency */
+  --color-emergency: #ef4444;
+  --color-emergency-light: #fee2e2;
+
+  /* Colors - Emerald */
+  --color-emerald-100: #d1fae5;
+  --color-emerald-500: #10b981;
+  --color-emerald-700: #047857;
+
+  /* Colors - Amber */
+  --color-amber-100: #fef3c7;
+  --color-amber-500: #f59e0b;
+  --color-amber-700: #b45309;
+
+  /* Colors - Surface */
+  --color-background: #f6f7f8;
+  --color-surface: #ffffff;
+  --color-surface-variant: #f1f5f9;
+  --color-surface-container: #f1f5f9;
+  --color-surface-container-low: #f8fafc;
+  --color-surface-container-high: #e2e8f0;
+  --color-surface-container-highest: #cbd5e1;
+  --color-on-surface: #0f172a;
+  --color-on-surface-variant: #475569;
+  --color-inverse-surface: #1e293b;
+  --color-inverse-on-surface: #f8fafc;
+
+  /* Colors - Outline */
+  --color-outline: #cbd5e1;
+  --color-outline-variant: #e2e8f0;
+
+  /* Colors - Grayscale / Slate */
+  --color-white: #ffffff;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #694747;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  /* Background Colors */
+  --color-background-light: #f6f7f8;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
+  --spacing-5xl: 8rem;
+
+  /* Typography - Font Family */
+  --font-family:
+    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
+  /* Typography - Font Sizes */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3rem; /* 48px */
+  --font-size-6xl: 3.75rem; /* 60px */
+
+  --font-size-7xl: 4.5rem; /* 72px */
+  --font-size-8xl: 6rem; /* 96px */
+  --font-size-9xl: 8rem; /* 128px */
+  --font-size-10xl: 10rem; /* 160px */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-primary: 0 10px 15px -3px rgba(var(--color-primary-rgb), 0.2);
+
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-base: all 0.3s ease;
+  --transition-transform: transform 0.2s ease;
+  --transition-colors: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Header Height */
+  --header-height: 83svh;
+}
+
+/* Font Size Utilities */
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-md {
+  font-size: var(--font-size-md);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+}
+
+.text-2xl {
+  font-size: var(--font-size-2xl);
+}
+
+.text-3xl {
+  font-size: var(--font-size-3xl);
+}
+
+.text-4xl {
+  font-size: var(--font-size-4xl);
+}
+
+.text-5xl {
+  font-size: var(--font-size-5xl);
+}
+
+.text-6xl {
+  font-size: var(--font-size-6xl);
+}
+
+.text-7xl {
+  font-size: var(--font-size-7xl);
+}
+
+.text-8xl {
+  font-size: var(--font-size-8xl);
+}
+
+.text-9xl {
+  font-size: var(--font-size-9xl);
+}
+
+.text-10xl {
+  font-size: var(--font-size-10xl);
+}
+
+/* Font Weight Utilities */
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* Line Height Utilities */
+.leading-tight {
+  line-height: 1.25;
+}
+
+.leading-normal {
+  line-height: 1.5;
+}
+
+.leading-loose {
+  line-height: 1.75;
+}
+
+/* Text Alignment */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Text Transform */
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+/* Text Color (Example) */
+.text-primary {
+  color: #3b82f6;
+}
+
+.text-gray {
+  color: #6b7280;
+}
