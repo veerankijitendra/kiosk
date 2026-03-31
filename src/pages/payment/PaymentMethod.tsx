@@ -26,13 +26,17 @@ type CardsType = {
 };
 
 export default function PaymentMethod() {
-  const { handleContinue, handleMethodSelect, selectedMethod, handleBack, isPending } =
-    usePaymentMethod();
+  const {
+    handleContinue,
+    handleMethodSelect,
+    selectedMethod,
+    handleBack,
+    isPending,
+    department,
+    doctor,
+  } = usePaymentMethod();
 
   const tokenNumber = 'A-104';
-  const doctorName = 'Dr. Sarah Johnson';
-  const department = 'General Medicine';
-  const fee = '$50.00';
 
   const methods: CardsType[] = [
     {
@@ -87,13 +91,13 @@ export default function PaymentMethod() {
                   <span className='material-symbols-outlined payment-method__doctor-icon'>
                     <Stethoscope />
                   </span>
-                  <span className='payment-method__doctor-name'>{doctorName}</span>
+                  <span className='payment-method__doctor-name'>{doctor?.name}</span>
                 </div>
                 <div className='payment-method__department-detail'>
                   <span className='material-symbols-outlined payment-method__department-icon'>
                     <Apartment />
                   </span>
-                  <span className='payment-method__department-name'>{department}</span>
+                  <span className='payment-method__department-name'>{department?.name}</span>
                 </div>
               </div>
             </div>
@@ -101,7 +105,7 @@ export default function PaymentMethod() {
             {/* Price Info */}
             <div className='payment-method__price'>
               <span className='payment-method__price-label'>Consultation Fee</span>
-              <span className='payment-method__price-value'>{fee}</span>
+              <span className='payment-method__price-value'>₹{doctor?.consultationFee}</span>
             </div>
           </div>
         </section>

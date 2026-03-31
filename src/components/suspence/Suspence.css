@@ -1,0 +1,162 @@
+.loader-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+}
+
+/* .spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--color-surface-container-high);
+  border-top: 4px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+}
+
+.pulse-ring {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid var(--color-primary);
+  animation: pulseRing 1.6s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  70% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.dot-loader {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+} */
+/* 
+.ecg {
+  width: 200px;
+  height: 10px;
+  background: var(--color-surface-container-high);
+  position: relative;
+  overflow: hidden;
+}
+
+.ecg::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary);
+  animation: pulse 1.6s linear infinite;
+  clip-path: polygon(
+    0% 50%,
+    10% 50%,
+    15% 10%,
+    20% 90%,
+    25% 50%,
+    35% 50%,
+    40% 30%,
+    45% 70%,
+    50% 50%,
+    100% 50%
+  );
+}
+
+@keyframes pulse {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+} */
+.heartbeat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 200px;
+  background-color: transparent; /* Adjust as needed */
+}
+
+.heartbeat-svg {
+  width: 100%;
+  height: auto;
+}
+
+.heartbeat-path {
+  /* Set a large dash array that is longer than the path itself */
+  stroke-dasharray: 2000;
+  /* Start with the dash offset at the same value so the line is hidden */
+  stroke-dashoffset: 2000;
+  /* Apply the animation */
+  animation: drawTrace 4s linear infinite;
+}
+
+@keyframes drawTrace {
+  0% {
+    stroke-dashoffset: 2000; /* Fully hidden */
+  }
+  20% {
+    stroke-dashoffset: 2000; /* Stay hidden for a short moment */
+  }
+  50% {
+    stroke-dashoffset: 0; /* Fully drawn at the midway point */
+  }
+  100% {
+    stroke-dashoffset: -2000; /* Clear the path by "drawing" off the end */
+  }
+}

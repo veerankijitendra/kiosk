@@ -4,6 +4,7 @@ import type {
   CreateTokenPayload,
   DepartmentResponseType,
   DoctorFilterType,
+  DoctorsResponseType,
 } from '../types';
 import api from './api';
 import { API_END_POINTS } from '../utils/apiEndPoints';
@@ -28,9 +29,10 @@ class KioskService {
     return data;
   }
 
-  async getDoctors(filters: DoctorFilterType): Promise<unknown> {
+  async getDoctors(filters: DoctorFilterType): Promise<DoctorsResponseType> {
     const result = doctorsFilterSchema.safeParse(filters);
     if (!result.success) throw result.error;
+    console.log(filters, 'jitendra');
 
     const queryObj = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
@@ -39,10 +41,14 @@ class KioskService {
       }
     });
 
-    const queryParams = queryObj.toString();
+    // const queryParams = queryObj.toString();
 
-    const { data } = await api.get<unknown>(
-      `${API_END_POINTS.GET_DOCTORS}${queryParams ? `?${queryParams}` : ''} }`,
+    // const { data } = await api.get<unknown>(
+    //   `${API_END_POINTS.GET_DOCTORS}${queryParams ? `?${queryParams}` : ''} }`,
+    // );
+
+    const { data } = await api.get<DoctorsResponseType>(
+      `${API_END_POINTS.GET_DOCTORS}?departmentId=${filters.departmentId}`,
     );
     return data;
   }

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import api from '../../services/api';
+// import { useQuery } from '@tanstack/react-query';
+// import api from '../../services/api';
 // import { useAppDispatch, useAppSelector } from '@/store/hooks';
 // import { setSelectedDoctor } from '@/store/slices/tokenSlice';
 import './SelectDoctor.css';
@@ -14,80 +14,107 @@ import KioskCustomHeader from '../../components/common/kioskCustomHeader/KioskCu
 import InputField from '../../components/common/input/Input';
 import Footer from '../../components/common/footer';
 import { useDoctors } from '../../hooks/queries/useDoctors';
+import { useNavigate } from 'react-router-dom';
+import { navigateWithDirection } from '../../utils/commonFunctions';
+import { ROUTES } from '../../utils/routeConstants';
+import { useKioskStore } from '../../store/useKioskStore';
 
-interface SelectDoctorProps {
-  onNext: () => void;
-  onBack: () => void;
-}
+import { type DoctorsResponseType } from '../../types';
 
-export default function SelectDoctor({ onNext, onBack }: SelectDoctorProps) {
+type Doctor = DoctorsResponseType['doctors'][0];
+
+const doctorImages = [
+  // 'https://images.unsplash.com/photo-1559839734-2b71f1536783?q=80&w=2070&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=1974&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1964&auto=format&fit=crop',
+];
+
+export default function SelectDoctor() {
   const [search, setSearch] = useState('');
-  const { data } = useDoctors({});
+  const department = useKioskStore((state) => state.department)!;
+  const setDoctor = useKioskStore((state) => state.setDoctor);
+  const { data, isLoading } = useDoctors({ departmentId: department?._id || '' });
+
+  const doctors: Doctor[] = data?.doctors || [];
+
+  const navigate = useNavigate();
 
   console.log(data);
   // const dispatch = useAppDispatch();
-  const selectedDept = {
-    _id: 'string',
+  // const selectedDept = {
+  //   _id: 'string',
+  // };
+
+  // const { data: doctors, isLoading } = useQuery({
+  //   queryKey: ['doctors', selectedDept?._id],
+  //   queryFn: async () => {
+  //     try {
+  //       const response = await api.get('/api/', {
+  //         params: { departmentId: selectedDept?._id },
+  //       });
+  //       return response.data.data;
+  //     } catch {
+  //       // Fallback mock data
+  //       return [
+  //         {
+  //           _id: '1',
+  //           name: 'Dr. Sarah Smith',
+  //           specialty: 'Cardiology Specialist',
+  //           available: true,
+  //           waiting: 2,
+  //           image:
+  //             'https://images.unsplash.com/photo-1559839734-2b71f1536783?q=80&w=2070&auto=format&fit=crop',
+  //         },
+  //         {
+  //           _id: '2',
+  //           name: 'Dr. James Wilson',
+  //           specialty: 'Pediatrics',
+  //           available: false,
+  //           waiting: 5,
+  //           image:
+  //             'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop',
+  //         },
+  //         {
+  //           _id: '3',
+  //           name: 'Dr. Elena Rodriguez',
+  //           specialty: 'Neurology Specialist',
+  //           available: true,
+  //           waiting: 1,
+  //           image:
+  //             'https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=1974&auto=format&fit=crop',
+  //         },
+  //         {
+  //           _id: '4',
+  //           name: 'Dr. Michael Chen',
+  //           specialty: 'General Medicine',
+  //           available: true,
+  //           waiting: 0,
+  //           image:
+  //             'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1964&auto=format&fit=crop',
+  //         },
+  //       ];
+  //     }
+  //   },
+  // });
+
+  const filtered = doctors?.filter((d: Doctor) =>
+    d.name.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const handleSelect = (doctor: Doctor) => {
+    setDoctor(doctor);
+    // dispatch(setSelectedDoctor(doctor));
+    // onNext();
+    handleNext();
   };
 
-  const { data: doctors, isLoading } = useQuery({
-    queryKey: ['doctors', selectedDept?._id],
-    queryFn: async () => {
-      try {
-        const response = await api.get('/api/doctor', {
-          params: { departmentId: selectedDept?._id },
-        });
-        return response.data.data;
-      } catch {
-        // Fallback mock data
-        return [
-          {
-            _id: '1',
-            name: 'Dr. Sarah Smith',
-            specialty: 'Cardiology Specialist',
-            available: true,
-            waiting: 2,
-            image:
-              'https://images.unsplash.com/photo-1559839734-2b71f1536783?q=80&w=2070&auto=format&fit=crop',
-          },
-          {
-            _id: '2',
-            name: 'Dr. James Wilson',
-            specialty: 'Pediatrics',
-            available: false,
-            waiting: 5,
-            image:
-              'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop',
-          },
-          {
-            _id: '3',
-            name: 'Dr. Elena Rodriguez',
-            specialty: 'Neurology Specialist',
-            available: true,
-            waiting: 1,
-            image:
-              'https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=1974&auto=format&fit=crop',
-          },
-          {
-            _id: '4',
-            name: 'Dr. Michael Chen',
-            specialty: 'General Medicine',
-            available: true,
-            waiting: 0,
-            image:
-              'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1964&auto=format&fit=crop',
-          },
-        ];
-      }
-    },
-  });
+  const handleBack = () => {
+    navigateWithDirection(navigate, '/' + ROUTES.DEPARTMENTS, -1);
+  };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const filtered = doctors?.filter((d: any) => d.name.toLowerCase().includes(search.toLowerCase()));
-
-  const handleSelect = () => {
-    // dispatch(setSelectedDoctor(doctor));
-    onNext();
+  const handleNext = () => {
+    navigateWithDirection(navigate, '/' + ROUTES.CHECK_IN_DETAILS, 1);
   };
 
   return (
@@ -150,18 +177,21 @@ export default function SelectDoctor({ onNext, onBack }: SelectDoctorProps) {
           {isLoading ? (
             <div className='select-doctor__loading'>Loading doctors...</div>
           ) : (
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            filtered?.map((doctor: any) => (
+            filtered?.map((doctor: Doctor, index: number) => (
               <>
-                <DoctorCard.Root key={doctor._id} doctor={doctor} onSelect={handleSelect}>
+                <DoctorCard.Root
+                  key={doctor._id}
+                  doctor={{ ...doctor, image: doctorImages[index % doctorImages?.length || 0] }}
+                  onSelect={handleSelect}
+                >
                   <DoctorCard.Image />
                   <DoctorCard.Content>
                     <DoctorCard.Header>
                       <DoctorCard.Name>{doctor.name}</DoctorCard.Name>
                       <DoctorCard.Status />
                     </DoctorCard.Header>
-                    <DoctorCard.Specialty>{doctor.specialty}</DoctorCard.Specialty>
-                    <DoctorCard.Waiting />
+                    {/* <DoctorCard.Specialty>{doctor?.specialty}</DoctorCard.Specialty> */}
+                    {/* <DoctorCard.Waiting /> */}
                   </DoctorCard.Content>
                 </DoctorCard.Root>
               </>
@@ -173,13 +203,13 @@ export default function SelectDoctor({ onNext, onBack }: SelectDoctorProps) {
       {/* Bottom Navigation */}
       <Footer.Root>
         <Footer.Actions align='space-between'>
-          <KioskButton.Root variant='back' onClick={onBack}>
+          <KioskButton.Root variant='back' onClick={handleBack} size='large'>
             <KioskButton.StartIcon>
               <ArrowBack />
             </KioskButton.StartIcon>
             <KioskButton.Text>Back</KioskButton.Text>
           </KioskButton.Root>
-          <KioskButton.Root onClick={onNext}>
+          <KioskButton.Root onClick={handleNext} size='large'>
             <KioskButton.Text>Confirm Selection</KioskButton.Text>
             <KioskButton.EndIcon>
               <ArrowForward />

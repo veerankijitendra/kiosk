@@ -39,3 +39,73 @@
 .login-form__icon-wrapper {
   cursor: pointer;
 }
+
+.login-form__header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-form__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.login-form__container h1 {
+  margin: 0; /* Remove bottom margin to align with icon */
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--color-on-surface);
+  text-decoration: none; /* Removed the underline for a cleaner look */
+}
+
+/* The Mini Pulse Animation */
+.login-header-pulse {
+  width: 60px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.pulse-svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.pulse-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: mini-pulse-scan 2.5s linear infinite;
+}
+
+@keyframes mini-pulse-scan {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  90% {
+    stroke-dashoffset: -200;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+    opacity: 0;
+  }
+}
+
+.login-form__subtitle {
+  color: var(--color-slate-400);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}

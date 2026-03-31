@@ -5,10 +5,14 @@ import { checkInDetailSchema } from '../../types/schema';
 import type { CheckInDetailType } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/routeConstants';
-import { useDepartment } from '../../hooks/queries/useDepartment';
+import { navigateWithDirection } from '../../utils/commonFunctions';
+import { useKioskStore } from '../../store/useKioskStore';
 
 const useCheckDetails = () => {
   const navigate = useNavigate();
+  const patientDetails = useKioskStore((store) => store.currentPatient);
+  const registerPatient = useKioskStore((store) => store.registerPatient);
+
   const {
     control,
     register,
@@ -19,21 +23,19 @@ const useCheckDetails = () => {
   } = useForm<CheckInDetailType>({
     resolver: zodResolver(checkInDetailSchema),
     defaultValues: {
-      ...{ age: '33', gender: 'Male', phone: '8080808080', name: 'jitendra' },
+      ...(patientDetails || {}),
+      // ...{ age: '33', gender: 'Male', phone: '8080808080', name: 'jitendra' },
     },
     mode: 'onChange',
   });
 
-  const { data } = useDepartment();
-  console.log(data);
-
   const handleBack = () => {
-    navigate(-1);
+    navigateWithDirection(navigate, '/' + ROUTES.DOCTORS, -1);
   };
 
   const handleConfirm = (data: CheckInDetailType) => {
-    console.log(data);
-    navigate('/' + ROUTES.PAYMENT);
+    registerPatient(data);
+    navigateWithDirection(navigate, '/' + ROUTES.PAYMENT, 1);
   };
 
   const handleClearPhone = () => {

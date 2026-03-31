@@ -1,12 +1,13 @@
+import type { PropsWithChildren } from 'react';
 import './KioskWrapper.css';
-import { Outlet } from 'react-router-dom';
 
-const KioskWrapper = () => {
+const KioskWrapper = ({ children }: PropsWithChildren) => {
   return (
     <div className='kiosk-wrapper'>
       <div className='kiosk-container'>
         <div className='kiosk-inner'>
-          <Outlet />
+          {/* <Outlet /> */}
+          {children}
         </div>
       </div>
     </div>

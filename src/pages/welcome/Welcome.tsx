@@ -7,13 +7,14 @@ import TokenQueue, { type Token } from '../../components/token/Token';
 import HomeWelcomeCarousel from '../../components/carousel/Carousel';
 import { useAds } from '../../hooks/queries/useAds';
 import { ROUTES } from '../../utils/routeConstants';
+import { navigateWithDirection } from '../../utils/commonFunctions';
 
 export default function HomeWelcome() {
   const { data, isError, isLoading } = useAds();
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/' + ROUTES.CHECK_IN_DETAILS);
+    navigateWithDirection(navigate, '/' + ROUTES.DEPARTMENTS, 1);
   };
 
   const ads = data?.data ?? [];

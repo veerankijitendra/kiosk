@@ -13,7 +13,8 @@ import { ROUTES } from '../../utils/routeConstants';
 import { setTokens } from '../../utils/auth';
 import { CloseEye, OpenEye } from '../../components/common/icons';
 import { useState } from 'react';
-import { useDoctors } from '../../hooks/queries/useDoctors';
+import StatusChip from '../../components/status-chip/StatusChip';
+import { navigateWithDirection } from '../../utils/commonFunctions';
 
 const Login = () => {
   const {
@@ -25,7 +26,7 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
     defaultValues: {
-      kioskId: '',
+      kioskId: 'KA0101',
       email: 'admin@anupama.com',
       password: 'password123',
     },
@@ -37,14 +38,11 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const data = useDoctors({});
-  console.log('jitendra===>', data);
-
   const onSubmit = (data: LoginFormType) => {
     mutate(data, {
       onSuccess: (resposne) => {
         setTokens(resposne.data?.token, resposne.data?.token);
-        navigate(ROUTES.WELCOME);
+        navigateWithDirection(navigate, ROUTES.WELCOME, 1);
       },
       onError: (error) => {
         console.error(error);
@@ -59,18 +57,36 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='login-form'>
-      {/* Kiosk ID */}
+      <StatusChip isOnline={false} />
       <div className='login-form__container'>
-        <h1 className=''>Kiosk Login</h1>
+        <header className='login-form__header'>
+          <div className='login-form__title-row'>
+            <h1>Kiosk Login</h1>
+            {/* Subtle Pulse Icon */}
+            <div className='login-header-pulse'>
+              <svg viewBox='0 0 100 50' className='pulse-svg'>
+                <path
+                  className='pulse-path'
+                  d='M0,25 L20,25 L25,15 L30,35 L35,25 L45,25 L50,5 L55,45 L60,25 L75,25 L80,20 L85,25 L100,25'
+                  stroke='var(--color-primary)'
+                  strokeWidth='3'
+                  fill='none'
+                />
+              </svg>
+            </div>
+          </div>
+          <p className='login-form__subtitle'>System Active • Secure Access Required</p>
+        </header>
+
+        {/* Rest of your InputFields... */}
         <InputField.Root error={errors.kioskId?.message}>
           <InputField.Label>Kiosk ID</InputField.Label>
           <InputField.Wrapper className='login-form__input-feild__wrapper'>
-            <InputField.Input id='kioskId' {...register('kioskId')} placeholder='Enter kiosk ID' />
+            <InputField.Input id='kioskId' {...register('kioskId')} placeholder='Ex: K-1092' />
           </InputField.Wrapper>
-          {errors.kioskId && <InputField.Error>{errors.kioskId.message}</InputField.Error>}
+          <InputField.Error />
         </InputField.Root>
 
-        {/* Password */}
         <InputField.Root error={errors.password?.message}>
           <InputField.Label>Password</InputField.Label>
           <InputField.Wrapper className='login-form__input-feild__wrapper'>
@@ -78,24 +94,22 @@ const Login = () => {
               id='password'
               type={open ? 'text' : 'password'}
               {...register('password')}
-              placeholder='Enter kiosk password'
+              placeholder='••••••••••••'
             />
-
             <InputField.LeadingIcon onClick={togglePassword} className='login-form__icon-wrapper'>
               {open ? <OpenEye /> : <CloseEye />}
             </InputField.LeadingIcon>
           </InputField.Wrapper>
-          {errors.password && <InputField.Error>{errors.password.message}</InputField.Error>}
+          <InputField.Error />
         </InputField.Root>
 
-        {/* Submit */}
         <KioskButton.Root
           type='submit'
           className='login-form__button'
           size='large'
           disabled={isSubmitting}
         >
-          <KioskButton.Text>Login</KioskButton.Text>
+          <KioskButton.Text>{isSubmitting ? 'Connecting...' : 'Login'}</KioskButton.Text>
         </KioskButton.Root>
       </div>
     </form>

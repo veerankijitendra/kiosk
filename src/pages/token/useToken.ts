@@ -1,5 +1,6 @@
 // import { useAppSelector } from '@/store/hooks';
 import { useEffect, useState } from 'react';
+import { useKioskStore } from '../../store/useKioskStore';
 
 const useTokenGenerated = () => {
   const [countdown, setCountdown] = useState(15);
@@ -9,14 +10,13 @@ const useTokenGenerated = () => {
   //   generatedToken,
   //   patientDetails: { name, age, phone, weight },
   // } = useAppSelector((state) => state.token);
+  const department = useKioskStore((store) => store.department);
+  const doctor = useKioskStore((store) => store.doctor);
+  const generatedToken = useKioskStore((store) => store.token);
+  const { age, gender, name, phone } = useKioskStore((store) => store.currentPatient);
 
-  const name = 'Jitendra';
-  const age = '19';
-  const phone = '8080808082';
-  const weight = 'add';
-  const selectedDepartment = 'add';
-  const selectedDoctor = 'add';
-  const generatedToken = 'add';
+  const selectedDepartment = department?.name;
+  const selectedDoctor = doctor?.name;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -44,7 +44,7 @@ const useTokenGenerated = () => {
     name,
     age,
     phone,
-    weight,
+    gender,
     selectedDepartment,
     selectedDoctor,
     generatedToken,

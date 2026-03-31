@@ -1,21 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type JSX } from 'react';
 // import api from '@/services/api';
 // import { useAppDispatch } from '@/store/hooks';
 // import { setSelectedDepartment } from '@/store/slices/tokenSlice';
 import './SelectDepartment.css';
-import {
-  // Baby,
-  // Hearing,
-  // Heart,
-  MedicalServices,
-  Search,
-  // Spine,
-  Stethoscope,
-  // Vaccines,
-  ArrowBack,
-} from '../../components/common/icons';
+import { MedicalServices, Search, Stethoscope, ArrowBack } from '../../components/common/icons';
+import * as Icons from '../../components/common/icons';
 import KioskCustomHeader from '../../components/common/kioskCustomHeader/KioskCustomHeader';
 import InputField from '../../components/common/input/Input';
 import KioskButton from '../../components/common/button';
@@ -23,84 +14,84 @@ import DepartmentCard from '../../components/common/departmentCard/DepartmentCar
 import Footer from '../../components/common/footer';
 import { useDepartment } from '../../hooks/queries/useDepartment';
 import type { DepartmentResponseType } from '../../types';
+import { useNavigate } from 'react-router-dom';
+import { navigateWithDirection } from '../../utils/commonFunctions';
+import { ROUTES } from '../../utils/routeConstants';
+import { useKioskStore } from '../../store/useKioskStore';
+
+type DepartmentType = DepartmentResponseType['data'][0];
 
 export default function SelectDepartment() {
   const [search, setSearch] = useState('');
-  // const dispatch = useAppDispatch();
+
   const { data, isError, isLoading } = useDepartment();
 
-  // const { data: departments, isLoading } = useQuery({
-  //   queryKey: ['departments'],
-  //   queryFn: async () => {
-  //     try {
-  //       const response = await api.get('/api/department');
-  //       return response.data.data;
-  //     } catch {
-  //       // Fallback mock data
-  //       return [
-  //         {
-  //           _id: '1',
-  //           name: 'General Medicine',
-  //           description: 'Internal & Routine Care',
-  //           icon: <Stethoscope />,
-  //         },
-  //         {
-  //           _id: '2',
-  //           name: 'Cardiology',
-  //           description: 'Heart Health Center',
-  //           icon: <Heart />,
-  //         },
-  //         {
-  //           _id: '3',
-  //           name: 'Orthopedics',
-  //           description: 'Bone & Joint Specialist',
-  //           icon: <Spine />,
-  //         },
-  //         {
-  //           _id: '4',
-  //           name: 'Pediatrics',
-  //           description: 'Child & Infant Health',
-  //           icon: <Baby />,
-  //         },
-  //         {
-  //           _id: '5',
-  //           name: 'ENT',
-  //           description: 'Ear, Nose, & Throat',
-  //           icon: <Hearing />,
-  //         },
-  //         {
-  //           _id: '6',
-  //           name: 'Dermatology',
-  //           description: 'Skin & Aesthetic Care',
-  //           icon: <Vaccines />,
-  //         },
-  //       ];
-  //     }
-  //   },
-  // });
+  const navigate = useNavigate();
 
-  const filtered = (Array.isArray(data?.data) ? data.data : [])?.filter((d) =>
+  const setDepartment = useKioskStore((state) => state.setDepartment);
+
+  const iconMap = [
+    { key: 'car', icon: Icons.Heart }, // Cardiology
+    { key: 'neu', icon: Icons.Brain }, // Neurology
+    { key: 'ort', icon: Icons.Spine }, // Orthopedics
+    { key: 'ped', icon: Icons.Baby }, // Pediatrics
+    { key: 'ent', icon: Icons.Hearing }, // ENT
+    { key: 'der', icon: Icons.Skin }, // Dermatology
+    { key: 'gen', icon: Icons.Stethoscope }, // General Medicine
+    { key: 'oph', icon: Icons.Eye }, // Ophthalmology
+    { key: 'eye', icon: Icons.Eye }, // Eye alias
+    { key: 'den', icon: Icons.Tooth }, // Dental
+    { key: 'gyn', icon: Icons.Gynecology }, // Gynecology
+    { key: 'uro', icon: Icons.Kidney }, // Urology
+    { key: 'pul', icon: Icons.Lungs }, // Pulmonology
+    { key: 'onc', icon: Icons.Cancer }, // Oncology
+    { key: 'rad', icon: Icons.XRay }, // Radiology
+    { key: 'eme', icon: Icons.Ambulance }, // Emergency
+    { key: 'pha', icon: Icons.Pharmacy }, // Pharmacy
+    { key: 'phy', icon: Icons.Physio }, // Physiotherapy
+    { key: 'psy', icon: Icons.Psychology }, // Psychiatry
+    { key: 'nep', icon: Icons.Nephrology }, // Nephrology
+    { key: 'gas', icon: Icons.Gastro }, // Gastroenterology
+    { key: 'end', icon: Icons.Endocrine }, // Endocrinology
+  ];
+
+  const getIcon = (department: string): JSX.Element => {
+    const iconStyle = { fontSize: '2.5rem' };
+
+    const name = department.toLowerCase();
+
+    const match = iconMap.find((item) => name.includes(item.key));
+
+    const Icon = match ? match.icon : Stethoscope;
+    return <Icon style={iconStyle} />;
+  };
+
+  const filtered = (Array.isArray(data?.data) ? data.data : [])?.filter((d: DepartmentType) =>
     d.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const handleSelect = () => {
-    // dispatch(setSelectedDepartment(dept));
-    console.log();
-    // onNext();
+  const handleSelect = (dept: DepartmentType) => {
+    setDepartment(dept);
+    console.log(dept);
+    navigateWithDirection(navigate, '/' + ROUTES.DOCTORS, 1);
   };
 
-  const handleBack = () => {};
+  const handleBack = () => {
+    navigateWithDirection(navigate, '/' + ROUTES.WELCOME, -1);
+  };
 
   return (
     <div className='select-department'>
       {/* Top Bar / Header Section */}
       <KioskCustomHeader.Root>
         <KioskCustomHeader.Content>
-          <KioskCustomHeader.IconWrapper>
-            <KioskCustomHeader.Icon>
-              <MedicalServices />
-            </KioskCustomHeader.Icon>
-          </KioskCustomHeader.IconWrapper>
+          <div className='select-department__icon-pb'>
+            <KioskCustomHeader.IconWrapper>
+              <KioskCustomHeader.Icon>
+                <MedicalServices />
+              </KioskCustomHeader.Icon>
+            </KioskCustomHeader.IconWrapper>
+          </div>
           <KioskCustomHeader.Title>Select Department</KioskCustomHeader.Title>
           <KioskCustomHeader.SubTitle>
             Please choose the department you want to visit.
@@ -130,12 +121,15 @@ export default function SelectDepartment() {
             filtered?.map((dept: DepartmentResponseType['data'][0]) => (
               <>
                 <DepartmentCard.Root key={dept._id} onSelect={handleSelect} department={dept}>
-                  <DepartmentCard.Content>
+                  <DepartmentCard.Content className='select-department__card-wrapper__row'>
                     <DepartmentCard.Icon>
-                      <Stethoscope style={{ fontSize: '2.5rem' }} />
+                      {/* <Stethoscope style={{ fontSize: '2.5rem' }} /> */}
+                      {getIcon(dept.name)}
                     </DepartmentCard.Icon>
-                    <DepartmentCard.Title>{dept.name}</DepartmentCard.Title>
-                    <DepartmentCard.Description>{dept.prefix}</DepartmentCard.Description>
+                    <div>
+                      <DepartmentCard.Title>{dept.name}</DepartmentCard.Title>
+                      <DepartmentCard.Description>{dept.prefix}</DepartmentCard.Description>
+                    </div>
                   </DepartmentCard.Content>
                 </DepartmentCard.Root>
               </>

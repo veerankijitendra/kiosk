@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import './DoctorCard.css';
 
+import { type DoctorsResponseType } from '../../../types';
 // Context for sharing doctor data across composition components
 interface DoctorCardContextValue {
   doctor: Doctor;
@@ -25,14 +26,14 @@ const useDoctorCardContext = () => {
 };
 
 // Types
-export interface Doctor {
-  _id: string;
-  name: string;
-  specialty: string;
+type Doctor = DoctorsResponseType['doctors'][0] & {
+  // _id: string;
+  // name: string;
+  specialty?: string;
   available?: boolean;
   waiting?: number;
   image?: string;
-}
+};
 
 // Omit onSelect from HTMLAttributes to avoid conflict
 export interface DoctorCardRootProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
@@ -223,7 +224,7 @@ DoctorCardName.displayName = 'DoctorCard.Name';
 const DoctorCardStatus = forwardRef<HTMLSpanElement, DoctorCardStatusProps>(
   ({ available, children, className = '', ...restProps }, ref) => {
     const { doctor } = useDoctorCardContext();
-    const isAvailable = available !== undefined ? available : doctor.available;
+    const isAvailable = available !== undefined ? available : doctor?.available;
     const statusText = children || (isAvailable ? 'Available' : 'Busy');
 
     const statusClasses = [
@@ -253,7 +254,7 @@ const DoctorCardSpecialty = forwardRef<HTMLParagraphElement, DoctorCardSpecialty
 
     return (
       <p ref={ref} className={specialtyClasses} {...restProps}>
-        {children || doctor.specialty}
+        {children || doctor?.specialty}
       </p>
     );
   },
@@ -265,7 +266,7 @@ DoctorCardSpecialty.displayName = 'DoctorCard.Specialty';
 const DoctorCardWaiting = forwardRef<HTMLDivElement, DoctorCardWaitingProps>(
   ({ waiting, children, className = '', ...restProps }, ref) => {
     const { doctor } = useDoctorCardContext();
-    const waitingCount = waiting !== undefined ? waiting : doctor.waiting;
+    const waitingCount = waiting !== undefined ? waiting : doctor?.waiting;
 
     const waitingClasses = ['select-doctor__card-waiting', className].filter(Boolean).join(' ');
 
