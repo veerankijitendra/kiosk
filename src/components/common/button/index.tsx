@@ -7,6 +7,7 @@ import React, {
   type ForwardedRef,
 } from 'react';
 import './Button.css';
+import { cn } from '../../../lib/utils';
 
 // ===== Context for sharing button state =====
 interface ButtonContextValue {
@@ -57,14 +58,24 @@ const ButtonRoot = forwardRef<HTMLButtonElement, ButtonRootProps>(
           ref={ref}
           type={type}
           disabled={disabled || loading}
-          className={`
-          patient-checkin__footer-btn
-          patient-checkin__footer-btn--${variant}
-          patient-checkin__footer-btn--${size}
-          ${fullWidth ? 'patient-checkin__footer-btn--full-width' : ''}
-          ${loading ? 'patient-checkin__footer-btn--loading' : ''}
-          ${className}
-        `}
+          className={
+            //     `
+            //   patient-checkin__footer-btn
+            //   patient-checkin__footer-btn--${variant}
+            //   patient-checkin__footer-btn--${size}
+            //   ${fullWidth ? 'patient-checkin__footer-btn--full-width' : ''}
+            //   ${loading ? 'patient-checkin__footer-btn--loading' : ''}
+            //   ${className}
+            // `
+            cn(
+              'patient-checkin__footer-btn',
+              `patient-checkin__footer-btn--${variant}`,
+              `patient-checkin__footer-btn--${size}`,
+              fullWidth ? 'patient-checkin__footer-btn--full-width' : '',
+              loading ? 'patient-checkin__footer-btn--loading' : '',
+              className,
+            )
+          }
           {...props}
         >
           {children}
@@ -87,13 +98,22 @@ const ButtonStartIcon: React.FC<ButtonStartIconProps> = ({ children, className =
 
   return (
     <span
-      className={`
-      material-symbols-outlined
-      patient-checkin__footer-icon
-      patient-checkin__footer-icon--start
-      patient-checkin__footer-icon--${size}
-      ${className}
-    `}
+      className={
+        //     `
+        //   material-symbols-outlined
+        //   patient-checkin__footer-icon
+        //   patient-checkin__footer-icon--start
+        //   patient-checkin__footer-icon--${size}
+        //   ${className}
+        // `
+        cn(
+          'material-symbols-outlined',
+          'patient-checkin__footer-icon',
+          'patient-checkin__footer-icon--start',
+          `patient-checkin__footer-icon--${size}`,
+          className,
+        )
+      }
     >
       {children}
     </span>
@@ -111,13 +131,22 @@ const ButtonEndIcon: React.FC<ButtonEndIconProps> = ({ children, className = '' 
 
   return (
     <span
-      className={`
-      material-symbols-outlined
-      patient-checkin__footer-icon
-      patient-checkin__footer-icon--end
-      patient-checkin__footer-icon--${size}
-      ${className}
-    `}
+      className={
+        //     `
+        //   material-symbols-outlined
+        //   patient-checkin__footer-icon
+        //   patient-checkin__footer-icon--end
+        //   patient-checkin__footer-icon--${size}
+        //   ${className}
+        // `
+        cn(
+          'material-symbols-outlined',
+          'patient-checkin__footer-icon',
+          'patient-checkin__footer-icon--end',
+          `patient-checkin__footer-icon--${size}`,
+          className,
+        )
+      }
     >
       {children}
     </span>
@@ -135,12 +164,20 @@ const ButtonText: React.FC<ButtonTextProps> = ({ children, className = '' }) => 
 
   return (
     <span
-      className={`
-      patient-checkin__footer-text
-      patient-checkin__footer-text--${variant}
-      patient-checkin__footer-text--${size}
-      ${className}
-    `}
+      className={
+        //     `
+        //   patient-checkin__footer-text
+        //   patient-checkin__footer-text--${variant}
+        //   patient-checkin__footer-text--${size}
+        //   ${className}
+        // `
+        cn(
+          'patient-checkin__footer-text',
+          `patient-checkin__footer-text--${variant}`,
+          `patient-checkin__footer-text--${size}`,
+          className,
+        )
+      }
     >
       {children}
     </span>

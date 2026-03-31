@@ -1,0 +1,87 @@
+/* HomeWelcome.css - Industry Standard CSS with BEM methodology */
+
+/* Main container */
+.home-welcome {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100svh;
+  background-color: var(--color-white);
+}
+
+/* Header Section */
+.home-welcome__header {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-slate-900);
+}
+
+.home-welcome__ads-loading--container {
+  height: 100%;
+  width: 100%;
+  color: var(--color-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+}
+/* Overlay with gradient */
+
+/* Content overlay */
+
+/* Title */
+
+/* Carousel Indicators */
+
+/* CTA Section */
+
+/* Footer Section */
+.home-welcome__footer {
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-gray-200);
+  padding: 1rem;
+  height: calc(100svh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Progress Line */
+.home-welcome__progress-line {
+  position: absolute;
+  top: 2rem;
+  left: 5rem;
+  right: 5rem;
+  height: 0.25rem;
+  background-color: var(--color-gray-200);
+  z-index: 0;
+}
+
+/* Token Label */
+
+/* Animations */
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}

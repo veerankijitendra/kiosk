@@ -6,6 +6,7 @@ import React, {
   createContext,
   useContext,
 } from 'react';
+import type { DepartmentResponseType } from '../../../types';
 
 // Context for sharing department data across composition components
 interface DepartmentCardContextValue {
@@ -25,13 +26,7 @@ const useDepartmentCardContext = () => {
 };
 
 // Types
-export interface Department {
-  _id: string;
-  name: string;
-  description: string;
-  icon?: string;
-}
-
+type Department = DepartmentResponseType['data'][0];
 // Omit the onSelect from HTMLAttributes to avoid conflict
 export interface DepartmentCardRootProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -143,7 +138,7 @@ const DepartmentCardIcon = forwardRef<HTMLDivElement, DepartmentCardIconProps>(
           <span
             className={`material-symbols-outlined select-department__card-icon-symbol ${iconClassName}`}
           >
-            {department.icon || 'stethoscope'}
+            {department.name || 'stethoscope'}
           </span>
         )}
       </div>

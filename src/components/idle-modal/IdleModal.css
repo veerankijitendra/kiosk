@@ -1,0 +1,38 @@
+.idle-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.idle-modal__content {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  width: 400px;
+}
+
+.idle-modal__content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.idle-modal__content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.idle-modal__content button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background: #22c55e;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}

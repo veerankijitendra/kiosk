@@ -72,20 +72,6 @@
   }
 }
 
-/* Header Container */
-.home-welcome__header {
-  position: relative;
-  width: 100%;
-  height: 100svh;
-  min-height: 600px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--color-slate-900);
-}
-
 /* Overlay */
 .home-welcome__overlay {
   position: absolute;

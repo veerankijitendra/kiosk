@@ -1,7 +1,5 @@
-import React, { forwardRef, useState, useRef, useEffect, useMemo } from 'react';
+import { forwardRef, useState, useRef, useEffect } from 'react';
 import './Select.css';
-import { type FieldErrors } from 'react-hook-form';
-import { TypeCheckInDetailsFormInput } from '@/store/schema/patient.schema';
 import { cn } from '../../../lib/utils';
 
 interface SelectOption {
@@ -11,6 +9,8 @@ interface SelectOption {
   icon?: string;
 }
 
+import { type FieldError } from 'react-hook-form';
+
 interface SelectProps {
   name?: string;
   value?: string;
@@ -19,19 +19,17 @@ interface SelectProps {
   options: SelectOption[];
   placeholder?: string;
   disabled?: boolean;
-  error?: FieldErrors<TypeCheckInDetailsFormInput> | null;
+  error?: FieldError;
   label?: string;
   icon?: string;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'phone';
-  register?: any;
   required?: boolean;
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
   (
     {
-      name,
       value: controlledValue,
       onChange,
       onBlur,
@@ -43,7 +41,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       icon,
       size = 'md',
       variant = 'default',
-      register,
       required = false,
     },
     ref,
@@ -72,16 +69,16 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       onChange?.(optionValue);
 
       // Handle React Hook Form register
-      if (register?.onChange) {
-        const syntheticEvent = {
-          target: {
-            name: name,
-            value: optionValue,
-            type: 'select',
-          },
-        };
-        register.onChange(syntheticEvent);
-      }
+      // if (register?.onChange) {
+      //   const syntheticEvent = {
+      //     target: {
+      //       name: name,
+      //       value: optionValue,
+      //       type: 'select',
+      //     },
+      //   };
+      //   register.onChange(syntheticEvent);
+      // }
 
       setIsOpen(false);
       setIsFocused(false);
@@ -90,9 +87,9 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     const handleBlur = () => {
       setIsFocused(false);
       onBlur?.();
-      if (register?.onBlur) {
-        register.onBlur();
-      }
+      // if (register?.onBlur) {
+      //   register.onBlur();
+      // }
     };
 
     const handleTriggerClick = () => {
@@ -122,9 +119,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isOpen]);
 
-    const hasError = useMemo(() => {
-      return !!error?.gender?.message;
-    }, [error]);
+    const hasError = !!error?.message;
 
     console.log('hasError', hasError);
 
@@ -143,18 +138,18 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     }, [isOpen]);
 
     // Register initial value
-    useEffect(() => {
-      if (register && value) {
-        const syntheticEvent = {
-          target: {
-            name: name,
-            value: value,
-            type: 'select',
-          },
-        };
-        register.onChange(syntheticEvent);
-      }
-    }, []);
+    // useEffect(() => {
+    //   if (register && value) {
+    //     const syntheticEvent = {
+    //       target: {
+    //         name: name,
+    //         value: value,
+    //         type: 'select',
+    //       },
+    //     };
+    //     register.onChange(syntheticEvent);
+    //   }
+    // }, []);
 
     return (
       <div ref={ref} className='select-field'>
@@ -245,10 +240,10 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
           </div>
         )}
 
-        {hasError && <p className='select-field__error'>{error?.gender?.message as string}</p>}
+        {hasError && <p className='select-field__error'>{error?.message as string}</p>}
 
         {/* Hidden input for form submission */}
-        <input type='hidden' name={name} value={value} {...register} />
+        {/* <input type='hidden' name={name} value={value} {...register} /> */}
       </div>
     );
   },

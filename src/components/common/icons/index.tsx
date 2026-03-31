@@ -29,7 +29,7 @@ import {
 
 import { LuStethoscope, LuBaby } from 'react-icons/lu';
 
-import { IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdHeartEmpty, IoMdEyeOff, IoMdEye } from 'react-icons/io';
 import { SiSpine } from 'react-icons/si';
 /**Admin realted icons starts here */
 
@@ -69,4 +69,7 @@ export const LocalHospital = (props: IconBaseProps) => <MdOutlineLocalHospital {
 export const AccessTime = (props: IconBaseProps) => <MdAccessTime {...props} />;
 export const Event = (props: IconBaseProps) => <MdEvent {...props} />;
 export const Groups = (props: IconBaseProps) => <MdGroups {...props} />;
+export const OpenEye = (props: IconBaseProps) => <IoMdEye {...props} />;
+export const CloseEye = (props: IconBaseProps) => <IoMdEyeOff {...props} />;
+
 /**KIOSK realted icons ends here */

@@ -1,0 +1,211 @@
+/* PatientCheckin.css - Industry Standard CSS with BEM methodology */
+
+/* Main Container */
+.patient-checkin {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+    width: 100%;
+  color: var(--color-on-surface);
+  background-color: inherit;
+}
+
+/* Header Styles */
+.patient-checkin__header {
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-2xl);
+  height: 8rem;
+  width: 100%;
+  z-index: 50;
+  position: relative;
+}
+
+.patient-checkin__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.patient-checkin__brand-icon-wrapper {
+  padding: var(--spacing-sm);
+  background-color: rgba(43, 157, 238, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.patient-checkin__brand-icon {
+  font-size: var(--font-size-5xl);
+  color: var(--color-primary);
+}
+
+.patient-checkin__title {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: var(--font-size-4xl);
+  letter-spacing: -0.025em;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.patient-checkin__subtitle {
+  color: var(--color-secondary);
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+  line-height: 1.4;
+}
+
+.patient-checkin__help-icon {
+  font-size: var(--font-size-4xl);
+  color: var(--color-outline);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.patient-checkin__help-icon:hover {
+  color: var(--color-primary);
+}
+
+/* Main Content */
+.patient-checkin__main {
+  flex: 1;
+  overflow: hidden;
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.patient-checkin__grid {
+  display: flex;
+  flex-direction: column;
+  /* grid-template-columns: repeat(12, 1fr); */
+  gap: var(--spacing-2xl);
+  height: 100%;
+}
+
+/* Instruction Card */
+.patient-checkin__instruction {
+  background-color: rgba(43, 157, 238, 0.05);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2xl);
+  border-left: 8px solid var(--color-primary);
+}
+
+.patient-checkin__instruction-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  color: var(--color-on-primary-container);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.2;
+}
+
+.patient-checkin__instruction-text {
+  font-size: var(--font-size-2xl);
+  color: var(--color-on-surface-variant);
+  line-height: 1.4;
+}
+
+/* Form Section */
+.patient-checkin__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.patient-checkin__row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-2xl);
+}
+
+.patient-checkin__phone-display {
+  width: 100%;
+  background: transparent;
+  font-size: var(--font-size-6xl);
+  font-weight: 800;
+  padding: var(--spacing-lg) var(--spacing-sm);
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  min-height: 7rem;
+  display: flex;
+  align-items: center;
+}
+
+.patient-checkin__clear-button {
+  margin-right: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: transparent;
+  border: none;
+  color: var(--color-outline);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.patient-checkin__clear-button:hover {
+  color: var(--color-error);
+}
+
+.patient-checkin__clear-icon {
+  font-size: var(--font-size-4xl);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .patient-checkin__footer-btn,
+  .patient-checkin__fab-btn,
+  .patient-checkin__input-wrapper,
+  .patient-checkin__clear-button {
+    transition: none;
+    animation: none;
+  }
+
+  .patient-checkin__footer-btn:active,
+  .patient-checkin__fab-btn:active {
+    transform: none;
+  }
+}
+
+/* Focus States */
+.patient-checkin__footer-btn:focus-visible,
+.patient-checkin__fab-btn:focus-visible,
+.patient-checkin__clear-button:focus-visible,
+.patient-checkin__help-icon:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.patient-checkin__input:focus-visible {
+  outline: none;
+}
+
+/* Print Styles */
+@media print {
+  .patient-checkin {
+    height: auto;
+    overflow: visible;
+  }
+
+  .patient-checkin__header,
+  .patient-checkin__footer,
+  .patient-checkin__fab,
+  .patient-checkin__right-column {
+    display: none;
+  }
+
+  .patient-checkin__main {
+    overflow: visible;
+    padding: var(--spacing-md);
+  }
+
+  .patient-checkin__left-column {
+    overflow: visible;
+  }
+
+  .patient-checkin__instruction {
+    break-inside: avoid;
+  }
+}

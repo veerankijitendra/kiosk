@@ -77,8 +77,8 @@
   --spacing-5xl: 8rem;
 
   /* Typography - Font Family */
-  --font-family:
-    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
 
   /* Typography - Font Sizes */
   --font-size-xs: 0.75rem; /* 12px */
@@ -120,6 +120,12 @@
 
   /* Header Height */
   --header-height: 83svh;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Font Size Utilities */
@@ -246,4 +252,19 @@
 
 .text-gray {
   color: #6b7280;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
 }

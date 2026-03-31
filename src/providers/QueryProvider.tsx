@@ -1,6 +1,7 @@
 // src/providers/QueryProvider.tsx
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, QueryCache } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { handleError } from '../utils/errorHandler';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,6 +12,9 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false, // Prevents aggressive refetching
     },
   },
+  queryCache: new QueryCache({
+    onError: handleError,
+  }),
 });
 
 export const QueryProvider = ({ children }: { children: React.ReactNode }) => (

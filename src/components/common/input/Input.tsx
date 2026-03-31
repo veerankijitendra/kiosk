@@ -215,6 +215,11 @@ const InputFieldInput = forwardRef<HTMLInputElement, InputFieldInputProps>(
   ) => {
     const { id, disabled: contextDisabled, setIsFocused, setHasValue } = useInputField();
 
+    // removing the id comming react-form-hook
+    if ('id' in props) {
+      delete props['id'];
+    }
+
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
       onFocus?.(e);

@@ -1,12 +1,10 @@
-import './HomeWelcomeCarousel.css';
+import type { AdsResponseType } from '../../types';
+import './Carousel.css';
 
-import React, { useEffect, useRef, useState } from 'react';
-
-import { cn } from '../../../lib/utils';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 interface HomeWelcomeCarouselProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  items: any[];
+  items: AdsResponseType['data'];
   onStart?: () => void;
   autoPlay?: boolean;
   showIndicators?: boolean;
@@ -20,18 +18,14 @@ const HomeWelcomeCarousel: React.FC<HomeWelcomeCarouselProps> = ({
   items,
   onStart,
   autoPlay = true,
-  // showIndicators = true,
-  // showCTA = true,
-  // ctaText = 'Tap to get token',
-  className = '',
-  baseUrl = '',
+  baseUrl = import.meta.env.VITE_CLOUDFRONT_URL || '',
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const activeItems = items.filter((item) => item.isActive);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeItems = useMemo(() => items.filter((item) => item.isActive), [items]);
 
   const currentItem = activeItems[currentIndex];
 
@@ -87,13 +81,12 @@ const HomeWelcomeCarousel: React.FC<HomeWelcomeCarouselProps> = ({
         clearTimeout(timerRef.current);
       }
     };
-  }, [currentIndex, currentItem, autoPlay, isPlaying, activeItems.length]);
+  }, [currentIndex, currentItem, autoPlay, isPlaying, activeItems]);
 
   // Handle media loading and playback
   useEffect(() => {
     if (!currentItem) return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
 
     if (currentItem.type === 'video') {
@@ -159,11 +152,6 @@ const HomeWelcomeCarousel: React.FC<HomeWelcomeCarouselProps> = ({
     };
   }, []);
 
-  // const handleIndicatorClick = (index: number) => {
-  //   setCurrentIndex(index);
-  //   setIsPlaying(true);
-  // };
-
   const handleCTAClick = () => {
     if (onStart) {
       onStart();
@@ -180,7 +168,7 @@ const HomeWelcomeCarousel: React.FC<HomeWelcomeCarouselProps> = ({
   }
 
   return (
-    <header className={cn('home-welcome__header', className)} onClick={handleCTAClick}>
+    <>
       {/* Background Overlay */}
       {/* <div className="home-welcome__overlay"></div> */}
 
@@ -213,37 +201,6 @@ const HomeWelcomeCarousel: React.FC<HomeWelcomeCarouselProps> = ({
         {isLoading && <div className='home-welcome__loading-spinner'></div>}
       </div>
 
-      {/* Content */}
-      {/* <div className="home-welcome__content">
-        <div className="home-welcome__brand">
-          <span className="material-symbols-outlined home-welcome__brand-icon">
-            medical_services
-          </span>
-          <div className="home-welcome__brand-divider"></div>
-        </div>
-        <h1 className="home-welcome__title">
-          {currentItem.title || 'Welcome to Our Health Care Services'}
-        </h1>
-        <p className="home-welcome__subtitle">Experience excellence in medical care</p>
-      </div> */}
-
-      {/* Carousel Indicators */}
-      {/* {showIndicators && activeItems.length > 1 && (
-        <div className="home-welcome__indicators">
-          {activeItems.map((_, index) => (
-            <button
-              key={index}
-              className={cn(
-                'home-welcome__indicator',
-                index === currentIndex && 'home-welcome__indicator--active',
-              )}
-              onClick={() => handleIndicatorClick(index)}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      )} */}
-
       {/* Progress Bar for Images */}
       {autoPlay && currentItem.type === 'image' && (
         <div className='home-welcome__progress'>
@@ -256,34 +213,7 @@ const HomeWelcomeCarousel: React.FC<HomeWelcomeCarouselProps> = ({
           />
         </div>
       )}
-
-      {/* CTA Button */}
-      {/* {showCTA && (
-        <div className="home-welcome__cta" onClick={handleCTAClick}>
-          <div className="home-welcome__cta-button">
-            <span className="home-welcome__cta-icon">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 4L12 20M12 20L18 14M12 20L6 14"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <span className="home-welcome__cta-text">{ctaText}</span>
-          </div>
-          <div className="home-welcome__cta-line"></div>
-        </div>
-      )} */}
-    </header>
+    </>
   );
 };
 

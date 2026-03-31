@@ -1,7 +1,7 @@
-import { notify } from '../../lib/toast';
 import { authService } from '../../services/authService';
 
 import { useMutation } from '@tanstack/react-query';
+import { handleError } from '../../utils/errorHandler';
 
 export const useLogin = () => {
   return useMutation({
@@ -9,6 +9,6 @@ export const useLogin = () => {
     onSuccess: (data) => {
       console.log('Logged in successfully', data);
     },
-    onError: (error: unknown) => notify.error((error as { message: unknown })?.message as string),
+    onError: handleError,
   });
 };

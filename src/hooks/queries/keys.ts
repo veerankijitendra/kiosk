@@ -1,5 +1,5 @@
-export const loginKeys = {
-  all: ['login'] as const,
+export const adsKeys = {
+  all: ['ads'] as const,
 };
 
 /**
