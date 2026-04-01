@@ -1,5 +1,4 @@
-/* NetworkStatusChip.css */
-.network-status-chip {
+/* .network-status-chip {
   position: fixed;
   top: var(--spacing-md);
   right: var(--spacing-md);
@@ -18,9 +17,8 @@
   transition: var(--transition-base);
 }
 
-/* Offline Status */
 .network-status-chip.offline {
-  background: var(--color-error);
+  background-color: var(--color-error-container);
   color: var(--color-on-error);
   border-left: 4px solid var(--color-error-container);
   animation:
@@ -37,7 +35,6 @@
   pointer-events: none;
 }
 
-/* Slow Status */
 .network-status-chip.slow {
   background: linear-gradient(135deg, var(--color-amber-500) 0%, var(--color-amber-700) 100%);
   color: var(--color-white);
@@ -47,7 +44,6 @@
     slideInRight 0.3s var(--transition-bounce);
 }
 
-/* Online Status */
 .network-status-chip.online {
   background: linear-gradient(135deg, var(--color-emerald-500) 0%, var(--color-emerald-700) 100%);
   color: var(--color-white);
@@ -57,18 +53,15 @@
     slideInRight 0.3s var(--transition-bounce);
 }
 
-/* Hover Effects */
 .network-status-chip:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-xl);
 }
 
-/* Exit Animation */
 .network-status-chip.exit {
   animation: slideOutRight 0.3s ease-in forwards;
-}
-
-/* Keyframes */
+} */
+/* 
 @keyframes slideInRight {
   from {
     transform: translateX(100%);
@@ -133,7 +126,6 @@
   }
 }
 
-/* Optional: Add a progress bar for online status */
 .network-status-chip.online::after {
   content: '';
   position: absolute;
@@ -153,9 +145,8 @@
   to {
     width: 0%;
   }
-}
-
-/* Responsive Design */
+} */
+/* 
 @media (max-width: 768px) {
   .network-status-chip {
     top: var(--spacing-sm);
@@ -165,7 +156,6 @@
   }
 }
 
-/* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .network-status-chip {
     backdrop-filter: blur(12px);
@@ -185,11 +175,12 @@
     background: linear-gradient(135deg, var(--color-emerald-500) 0%, var(--color-emerald-700) 100%);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
   }
-}
+} */
 
 /* ---------------------------------- */
 
 /* NetworkStatusChip.css */
+
 .network-status-chip {
   position: fixed;
   top: var(--spacing-lg);
@@ -213,7 +204,7 @@
 .network-status-chip.offline {
   background: var(--color-error);
   color: var(--color-on-error);
-  border-left: 4px solid var(--color-error-container);
+  /* border-left: 4px solid var(--color-error-container); */
   animation:
     shake 0.5s ease-in-out,
     slideInRight 0.3s var(--transition-bounce);
@@ -224,7 +215,7 @@
 .network-status-chip.slow {
   background: linear-gradient(135deg, var(--color-amber-500) 0%, var(--color-amber-700) 100%);
   color: var(--color-white);
-  border-left: 4px solid var(--color-amber-100);
+  /* border-left: 4px solid var(--color-amber-100); */
   animation:
     pulse 0.5s ease-in-out,
     slideInRight 0.3s var(--transition-bounce);
@@ -234,7 +225,7 @@
 .network-status-chip.online {
   background: linear-gradient(135deg, var(--color-emerald-500) 0%, var(--color-emerald-700) 100%);
   color: var(--color-white);
-  border-left: 4px solid var(--color-emerald-100);
+  /* border-left: 4px solid var(--color-emerald-100); */
   animation:
     glow 0.8s ease-out,
     slideInRight 0.3s var(--transition-bounce);
@@ -253,7 +244,7 @@
 }
 
 .offline-overlay {
-  background: rgba(0, 0, 0, 0.75);
+  /* background: rgba(0, 0, 0, 0.75); */
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -261,7 +252,7 @@
 }
 
 /* Optional: Add a message in the center */
-.offline-overlay::before {
+/* .offline-overlay::before {
   content: '⚠️ No Internet Connection';
   position: absolute;
   top: 50%;
@@ -277,10 +268,10 @@
   box-shadow: var(--shadow-xl);
   white-space: nowrap;
   animation: bounceIn 0.5s var(--transition-bounce);
-}
+} */
 
 /* Optional: Add pattern overlay */
-.offline-overlay::after {
+/* .offline-overlay::after {
   content: '';
   position: absolute;
   top: 0;
@@ -290,12 +281,18 @@
   background-image: radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 1%, transparent 1%);
   background-size: 24px 24px;
   pointer-events: none;
-}
+} */
 
 /* Hover Effects */
 .network-status-chip:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-xl);
+}
+
+.offline-heartbeat {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
 }
 
 /* Keyframes */
@@ -398,7 +395,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .network-status-chip {
     top: var(--spacing-sm);
     right: var(--spacing-sm);
@@ -414,10 +411,10 @@
     max-width: 80%;
     width: max-content;
   }
-}
+} */
 
 /* Dark mode support */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .network-status-chip {
     backdrop-filter: blur(12px);
   }
@@ -440,4 +437,4 @@
   .offline-overlay {
     background: rgba(0, 0, 0, 0.85);
   }
-}
+} */

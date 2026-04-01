@@ -32,7 +32,6 @@ class KioskService {
   async getDoctors(filters: DoctorFilterType): Promise<DoctorsResponseType> {
     const result = doctorsFilterSchema.safeParse(filters);
     if (!result.success) throw result.error;
-    console.log(filters, 'jitendra');
 
     const queryObj = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {

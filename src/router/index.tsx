@@ -15,6 +15,7 @@ import SuspenceFallback from '../components/suspence/Suspence';
 import SelectDoctor from '../pages/doctors/SelectDoctor';
 import { NetworkListener } from '../components/network-status/NetworkListener';
 import { NetworkStatusChip } from '../components/network-status/NetworkStatusChip';
+import { ProtectedRoute, PublicRoute } from '../components/public-protected';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -57,15 +58,17 @@ const Router = () => {
             <Suspense fallback={<SuspenceFallback />}>
               <NetworkStatusChip />
               <Routes location={location}>
-                {/* <Route path={ROUTES.HOME} element={<KioskWrapper />}> */}
-                <Route index element={<LoginPage />} />
-                <Route path={ROUTES.WELCOME} element={<HomeWelcome />} />
-                <Route path={ROUTES.DEPARTMENTS} element={<SelectDepartment />} />
-                <Route path={ROUTES.DOCTORS} element={<SelectDoctor />} />
-                <Route path={ROUTES.CHECK_IN_DETAILS} element={<PatientCheckin />} />
-                <Route path={ROUTES.PAYMENT} element={<PaymentMethod />} />
-                <Route path={ROUTES.TOKEN} element={<TokenGenerated />} />
-                {/* </Route> */}
+                <Route element={<PublicRoute />}>
+                  <Route path={ROUTES.HOME} element={<LoginPage />} />
+                </Route>
+                <Route element={<ProtectedRoute />}>
+                  <Route path={ROUTES.WELCOME} element={<HomeWelcome />} />
+                  <Route path={ROUTES.DEPARTMENTS} element={<SelectDepartment />} />
+                  <Route path={ROUTES.DOCTORS} element={<SelectDoctor />} />
+                  <Route path={ROUTES.CHECK_IN_DETAILS} element={<PatientCheckin />} />
+                  <Route path={ROUTES.PAYMENT} element={<PaymentMethod />} />
+                  <Route path={ROUTES.TOKEN} element={<TokenGenerated />} />
+                </Route>
               </Routes>
             </Suspense>
           </Animation>

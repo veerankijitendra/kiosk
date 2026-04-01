@@ -7,13 +7,11 @@ import { type LoginFormType } from '../../types';
 import KioskButton from '../../components/common/button';
 import InputField from '../../components/common/input/Input';
 import { useLogin } from '../../hooks/mutations/useLogin';
-import { notify } from '../../lib/toast';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/routeConstants';
 import { setTokens } from '../../utils/auth';
 import { CloseEye, OpenEye } from '../../components/common/icons';
 import { useState } from 'react';
-import StatusChip from '../../components/status-chip/StatusChip';
 import { navigateWithDirection } from '../../utils/commonFunctions';
 
 const Login = () => {
@@ -44,10 +42,6 @@ const Login = () => {
         setTokens(resposne.data?.token, resposne.data?.token);
         navigateWithDirection(navigate, ROUTES.WELCOME, 1);
       },
-      onError: (error) => {
-        console.error(error);
-        notify.error((error as { message: string })?.message as string);
-      },
     });
   };
 
@@ -57,7 +51,6 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='login-form'>
-      <StatusChip isOnline={false} />
       <div className='login-form__container'>
         <header className='login-form__header'>
           <div className='login-form__title-row'>

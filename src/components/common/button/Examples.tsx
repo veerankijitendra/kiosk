@@ -17,14 +17,14 @@ function FormButtonsExample() {
 
   return (
     <div style={{ display: 'flex', gap: '1rem' }}>
-      <Button.Root ref={cancelRef} variant="outline" onClick={handleCancel}>
+      <Button.Root ref={cancelRef} variant='outline' onClick={handleCancel}>
         <Button.StartIcon>
           <ArrowBack />
         </Button.StartIcon>
         <Button.Text>Cancel</Button.Text>
       </Button.Root>
 
-      <Button.Root ref={submitRef} variant="confirm" onClick={handleSubmit}>
+      <Button.Root ref={submitRef} variant='confirm' onClick={handleSubmit}>
         <Button.Text>Submit</Button.Text>
         <Button.EndIcon>
           <Check />

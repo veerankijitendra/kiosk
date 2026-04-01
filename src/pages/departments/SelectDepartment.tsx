@@ -18,6 +18,8 @@ import { useNavigate } from 'react-router-dom';
 import { navigateWithDirection } from '../../utils/commonFunctions';
 import { ROUTES } from '../../utils/routeConstants';
 import { useKioskStore } from '../../store/useKioskStore';
+import { useMultiClick } from '../../hooks/useMultiClick';
+import { clearTokens } from '../../utils/auth';
 
 type DepartmentType = DepartmentResponseType['data'][0];
 
@@ -29,6 +31,11 @@ export default function SelectDepartment() {
   const navigate = useNavigate();
 
   const setDepartment = useKioskStore((state) => state.setDepartment);
+
+  const handleLogout = useMultiClick(5, () => {
+    clearTokens();
+    navigateWithDirection(navigate, ROUTES.HOME, 1);
+  });
 
   const iconMap = [
     { key: 'car', icon: Icons.Heart }, // Cardiology
@@ -72,7 +79,6 @@ export default function SelectDepartment() {
 
   const handleSelect = (dept: DepartmentType) => {
     setDepartment(dept);
-    console.log(dept);
     navigateWithDirection(navigate, '/' + ROUTES.DOCTORS, 1);
   };
 
@@ -87,9 +93,11 @@ export default function SelectDepartment() {
         <KioskCustomHeader.Content>
           <div className='select-department__icon-pb'>
             <KioskCustomHeader.IconWrapper>
-              <KioskCustomHeader.Icon>
-                <MedicalServices />
-              </KioskCustomHeader.Icon>
+              <div onClick={handleLogout}>
+                <KioskCustomHeader.Icon>
+                  <MedicalServices />
+                </KioskCustomHeader.Icon>
+              </div>
             </KioskCustomHeader.IconWrapper>
           </div>
           <KioskCustomHeader.Title>Select Department</KioskCustomHeader.Title>

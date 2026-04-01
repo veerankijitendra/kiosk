@@ -40,7 +40,6 @@ export default function SelectDoctor() {
 
   const navigate = useNavigate();
 
-  console.log(data);
   // const dispatch = useAppDispatch();
   // const selectedDept = {
   //   _id: 'string',

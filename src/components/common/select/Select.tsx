@@ -121,8 +121,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const hasError = !!error?.message;
 
-    console.log('hasError', hasError);
-
     // Close on escape key
     useEffect(() => {
       const handleEscape = (event: KeyboardEvent) => {

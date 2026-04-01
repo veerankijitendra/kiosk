@@ -6,9 +6,6 @@ import { handleError } from '../../utils/errorHandler';
 export const useLogin = () => {
   return useMutation({
     mutationFn: authService.login,
-    onSuccess: (data) => {
-      console.log('Logged in successfully', data);
-    },
     onError: handleError,
   });
 };

@@ -110,7 +110,7 @@ const HomeWelcomeCarousel: React.FC<HomeWelcomeCarouselProps> = ({
               setIsPlaying(true);
             })
             .catch((error) => {
-              console.log('Video autoplay failed:', error);
+              console.error('Video autoplay failed:', error);
               setIsLoading(false);
               // If autoplay fails, use duration fallback
               const duration = (currentItem.duration || 10) * 1000;

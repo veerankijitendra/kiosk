@@ -34,7 +34,6 @@ const useTokenGenerated = () => {
 
   const handlePrint = () => {
     // Implement print functionality
-    console.log('Printing token...');
     window.print();
   };
 
