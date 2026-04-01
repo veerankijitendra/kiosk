@@ -13,6 +13,8 @@ import { ROUTES } from '../utils/routeConstants';
 import { Suspense, lazy } from 'react';
 import SuspenceFallback from '../components/suspence/Suspence';
 import SelectDoctor from '../pages/doctors/SelectDoctor';
+import { NetworkListener } from '../components/network-status/NetworkListener';
+import { NetworkStatusChip } from '../components/network-status/NetworkStatusChip';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -49,9 +51,11 @@ const Router = () => {
   return (
     <KioskWrapper>
       <div style={{ position: 'relative', overflow: 'hidden', height: '100vh' }}>
+        <NetworkListener />
         <AnimatePresence mode='wait'>
           <Animation key={location.pathname} direction={direction}>
             <Suspense fallback={<SuspenceFallback />}>
+              <NetworkStatusChip />
               <Routes location={location}>
                 {/* <Route path={ROUTES.HOME} element={<KioskWrapper />}> */}
                 <Route index element={<LoginPage />} />

@@ -24,7 +24,6 @@ const useCheckDetails = () => {
     resolver: zodResolver(checkInDetailSchema),
     defaultValues: {
       ...(patientDetails || {}),
-      // ...{ age: '33', gender: 'Male', phone: '8080808080', name: 'jitendra' },
     },
     mode: 'onChange',
   });

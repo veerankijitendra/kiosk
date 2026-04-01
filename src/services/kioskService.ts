@@ -16,7 +16,7 @@ class KioskService {
     return data;
   }
 
-  async createToken(patientDetails: CreateTokenPayload): Promise<unknown> {
+  async createToken(patientDetails: CreateTokenPayload): Promise<CreateTokenResponseType> {
     const { data } = await api.post<CreateTokenResponseType>(
       API_END_POINTS.CREATE_TOKEN,
       patientDetails,
@@ -40,12 +40,6 @@ class KioskService {
         queryObj.append(key, String(value));
       }
     });
-
-    // const queryParams = queryObj.toString();
-
-    // const { data } = await api.get<unknown>(
-    //   `${API_END_POINTS.GET_DOCTORS}${queryParams ? `?${queryParams}` : ''} }`,
-    // );
 
     const { data } = await api.get<DoctorsResponseType>(
       `${API_END_POINTS.GET_DOCTORS}?departmentId=${filters.departmentId}`,

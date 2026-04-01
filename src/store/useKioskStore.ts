@@ -14,7 +14,6 @@ type Doctor = DoctorsResponseType['doctors'][0];
 
 interface KioskState {
   // Connection State
-  isOnline: boolean;
 
   // Data Slices
   doctor: Doctor | null;
@@ -24,7 +23,6 @@ interface KioskState {
   token: string;
 
   // Actions
-  setOnlineStatus: (status: boolean) => void;
   setDoctor: (docs: Doctor) => void;
   setDepartment: (deps: Department) => void;
   registerPatient: (patient: CheckInDetailType) => void;
@@ -36,14 +34,12 @@ interface KioskState {
 export const useKioskStore = create<KioskState>()(
   persist(
     (set) => ({
-      isOnline: navigator.onLine,
       doctor: null,
       department: null,
       currentPatient: { age: '29', gender: 'Male', name: 'Test', phone: '9999999999' },
       selectedPaymentMethod: null,
       token: '',
 
-      setOnlineStatus: (status) => set({ isOnline: status }),
       setDoctor: (doctor) => set({ doctor }),
       setDepartment: (department) => set({ department }),
       registerPatient: (patient) => set({ currentPatient: patient }),
@@ -52,8 +48,10 @@ export const useKioskStore = create<KioskState>()(
 
       clearSession: () =>
         set({
-          currentPatient: { age: '29', gender: 'Male', name: 'Test', phone: '9999999999' },
+          currentPatient: { age: '', gender: '', name: '', phone: '' },
           selectedPaymentMethod: null,
+          doctor: null,
+          department: null,
         }),
     }),
     {

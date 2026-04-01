@@ -27,10 +27,7 @@ const useDoctorCardContext = () => {
 
 // Types
 type Doctor = DoctorsResponseType['doctors'][0] & {
-  // _id: string;
-  // name: string;
   specialty?: string;
-  available?: boolean;
   waiting?: number;
   image?: string;
 };
@@ -224,7 +221,7 @@ DoctorCardName.displayName = 'DoctorCard.Name';
 const DoctorCardStatus = forwardRef<HTMLSpanElement, DoctorCardStatusProps>(
   ({ available, children, className = '', ...restProps }, ref) => {
     const { doctor } = useDoctorCardContext();
-    const isAvailable = available !== undefined ? available : doctor?.available;
+    const isAvailable = available !== undefined ? available : doctor?.isAvailable;
     const statusText = children || (isAvailable ? 'Available' : 'Busy');
 
     const statusClasses = [

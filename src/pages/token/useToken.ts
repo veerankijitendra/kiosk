@@ -1,19 +1,18 @@
 // import { useAppSelector } from '@/store/hooks';
 import { useEffect, useState } from 'react';
 import { useKioskStore } from '../../store/useKioskStore';
+import { useNavigate } from 'react-router-dom';
+import { navigateWithDirection } from '../../utils/commonFunctions';
+import { ROUTES } from '../../utils/routeConstants';
 
 const useTokenGenerated = () => {
   const [countdown, setCountdown] = useState(15);
-  // const {
-  //   selectedDepartment,
-  //   selectedDoctor,
-  //   generatedToken,
-  //   patientDetails: { name, age, phone, weight },
-  // } = useAppSelector((state) => state.token);
   const department = useKioskStore((store) => store.department);
   const doctor = useKioskStore((store) => store.doctor);
   const generatedToken = useKioskStore((store) => store.token);
   const { age, gender, name, phone } = useKioskStore((store) => store.currentPatient);
+  const clearSession = useKioskStore((store) => store.clearSession);
+  const navigate = useNavigate();
 
   const selectedDepartment = department?.name;
   const selectedDoctor = doctor?.name;
@@ -23,7 +22,8 @@ const useTokenGenerated = () => {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          //   onFinish();
+          clearSession();
+          navigateWithDirection(navigate, '/' + ROUTES.WELCOME, -1);
           return 0;
         }
         return prev - 1;

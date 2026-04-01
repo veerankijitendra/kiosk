@@ -46,7 +46,6 @@ export default function Animation({ children, direction }: IProps) {
       exit='exit'
       transition={{ duration: 0.25, ease: 'easeInOut' }}
       style={{
-        position: 'absolute',
         width: '100%',
         height: '100%',
       }}
