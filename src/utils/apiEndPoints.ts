@@ -4,4 +4,5 @@ export enum API_END_POINTS {
   CREATE_TOKEN = '/api/token',
   GET_DEPARTMENTS = '/api/department',
   GET_DOCTORS = '/api/doctor',
+  REFRESH = '/api/auth/refresh',
 }
