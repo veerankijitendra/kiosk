@@ -8,13 +8,9 @@ export type DoctorFilterType = z.infer<typeof doctorsFilterSchema>;
 export type LoginResponseType = {
   success: boolean;
   data: {
-    _id: string;
-    name: string;
-    email: string;
-    role: string;
-    hospitalId: string;
-    doctorId: null;
     token: string;
+    refreshToken: string;
+    kioskType: string;
   };
 };
 
@@ -168,5 +164,25 @@ export type DoctorsResponseType = {
     total: number;
     page: number;
     pages: number;
+  };
+};
+
+type ResponseTokenType = {
+  _id: string;
+  tokenNumber: string;
+  status: string;
+  isEmergency: boolean;
+};
+
+export type TokensResponseType = {
+  success: boolean;
+  data: {
+    tokensById: Record<string, ResponseTokenType>;
+    buckets: {
+      lastCompleted: string[];
+      current: string[];
+      general: string[];
+      emergency: string[];
+    };
   };
 };

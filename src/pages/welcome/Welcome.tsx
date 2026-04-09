@@ -3,14 +3,28 @@
 import './Welcome.css';
 import { useNavigate } from 'react-router-dom';
 
-import TokenQueue, { type Token } from '../../components/token/Token';
+import TokenQueue from '../../components/token/Token';
 import HomeWelcomeCarousel from '../../components/carousel/Carousel';
 import { useAds } from '../../hooks/queries/useAds';
 import { ROUTES } from '../../utils/routeConstants';
 import { navigateWithDirection } from '../../utils/commonFunctions';
+import {
+  useTokens,
+  useNextTokens,
+  useEmergencyTokens,
+  useCurrentTokens,
+  useCompletedTokens,
+} from '../../hooks/queries/useTokens';
+import { useMemo } from 'react';
 
 export default function HomeWelcome() {
+  // 🔥 source query
+  useTokens();
   const { data, isError, isLoading } = useAds();
+  const { data: generalTokens } = useNextTokens();
+  const { data: emergencyTokens } = useEmergencyTokens();
+  const { data: currentToken } = useCurrentTokens();
+  const { data: completedToken } = useCompletedTokens();
   const navigate = useNavigate();
 
   const handleStart = () => {
@@ -19,14 +33,14 @@ export default function HomeWelcome() {
 
   const ads = data?.data ?? [];
 
-  // Mocking queue progress as seen in HTML
-  const queueProgress: Token[] = [
-    { token: 'A-142', status: 'COMPLETED', current: false },
-    { token: 'A-143', status: 'CURRENT', current: true },
-    { token: 'E-09', status: 'EMERGENCY', emergency: true },
-    { token: 'A-144', status: 'NEXT', next: true, est: '5 min' },
-    { token: 'A-145', status: 'NEXT', next: true, est: '5 min' },
-  ];
+  const progress = useMemo(() => {
+    return [
+      ...(completedToken ?? []),
+      ...(currentToken ?? []),
+      ...(emergencyTokens ?? []),
+      ...(generalTokens ?? []),
+    ];
+  }, [completedToken, currentToken, emergencyTokens, generalTokens]);
 
   return (
     <div className='home-welcome'>
@@ -50,7 +64,7 @@ export default function HomeWelcome() {
 
       {/* Bottom Section: Token Queue Progress */}
       <footer className='home-welcome__footer'>
-        <TokenQueue queueProgress={queueProgress} />
+        <TokenQueue queueProgress={progress} />
       </footer>
     </div>
   );

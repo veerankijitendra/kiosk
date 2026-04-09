@@ -4,8 +4,8 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-import { clearTokens, getAccessToken, setTokens } from '../utils/auth';
 import { API_END_POINTS } from '../utils/apiEndPoints';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -35,7 +35,8 @@ api.interceptors.request.use(
     config.headers = config.headers || {};
 
     // ✅ Token
-    const token = getAccessToken();
+    // const token = getAccessToken();
+    const token = useAuthStore.getState().token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -80,11 +81,18 @@ api.interceptors.response.use(
 
       try {
         const url = getApiUrl() + API_END_POINTS.REFRESH;
-        const res = await axios.post<{ token: string }>(url, {}, { withCredentials: true });
+        const refreshToken = useAuthStore.getState().refreshToken;
+        const res = await axios.post<{ token: string }>(
+          url,
+          { refreshToken },
+          { withCredentials: true },
+        );
 
         const newToken = res.data.token;
 
-        setTokens(newToken, newToken);
+        // setTokens(newToken, newToken);
+        const setAuth = useAuthStore.getState().setAuth;
+        setAuth({ token: newToken });
 
         onRefreshed(newToken);
 
@@ -95,7 +103,8 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (err) {
         console.error('Refresh failed', err);
-        clearTokens();
+        const { clearAuth } = useAuthStore.getState();
+        clearAuth();
         window.location.href = '/';
         return Promise.reject(err);
       } finally {
@@ -105,7 +114,8 @@ api.interceptors.response.use(
 
     if (error.response?.status === 403) {
       console.warn('Token expired');
-      clearTokens();
+      const { clearAuth } = useAuthStore.getState();
+      clearAuth();
       window.location.href = '/';
     }
     return Promise.reject(error);

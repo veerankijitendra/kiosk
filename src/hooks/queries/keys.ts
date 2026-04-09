@@ -2,6 +2,11 @@ export const adsKeys = {
   all: ['ads'] as const,
 };
 
+export const tokenKeys = {
+  doctor: ['tokens', 'doctor'],
+  kiosk: ['tokens', 'kiosk'],
+};
+
 /**
  * 
   src/hooks/queries/productKeys.ts

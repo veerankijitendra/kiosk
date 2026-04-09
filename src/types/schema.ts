@@ -1,7 +1,10 @@
 import { z } from 'zod';
 
 export const loginSchema = z.object({
-  kioskId: z.string().length(6, 'Kiosk ID must be exactly 6 characters'),
+  kioskId: z
+    .string()
+    .min(1, 'Kiosk ID is required')
+    .regex(/^[A-Z]+-\d+$/, 'Invalid kiosk ID format'),
   email: z.email()?.optional(),
 
   password: z.string().min(3, 'Password must be at least 3 characters'),

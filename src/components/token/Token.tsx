@@ -1,18 +1,12 @@
+import type { TokensResponseType } from '../../types';
 import './Token.css';
 
-export type Token = {
-  token: string;
-  status: 'EMERGENCY' | 'CURRENT' | 'NEXT' | 'COMPLETED';
-  est?: string;
-  current?: boolean;
-  emergency?: boolean;
-  next?: boolean;
-};
+type Token = TokensResponseType['data']['tokensById']['1'];
 
-const STATUS_CLASS = {
+const STATUS_CLASS: Record<string, string> = {
   EMERGENCY: 'token--emergency',
-  CURRENT: 'token--current',
-  NEXT: 'token--next',
+  CALLED: 'token--current',
+  WAITING: 'token--next',
   COMPLETED: 'token--completed',
 };
 
@@ -36,9 +30,9 @@ export default function TokenQueue({ queueProgress }: { queueProgress: Token[] }
         >
           <div className='token__label'>{item.status}</div>
 
-          <div className='token__number'>{item.token}</div>
+          <div className='token__number'>{item.tokenNumber}</div>
 
-          {item.status === 'NEXT' && item.est && <div className='token__meta'>Est: {item.est}</div>}
+          {/* {item.status === 'NEXT' && item.est && <div className='token__meta'>Est: {item.est}</div>} */}
         </div>
       ))}
     </div>

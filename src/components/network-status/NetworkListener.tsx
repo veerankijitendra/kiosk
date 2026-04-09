@@ -1,12 +1,15 @@
 // NetworkListener.tsx
 import { useEffect } from 'react';
 import { useNetworkStore } from '../../store/useNetworkStore';
+import { useQueryClient } from '@tanstack/react-query';
+import { tokenKeys } from '../../hooks/queries/keys';
 
 const ONLINE_CHECK_INTERWEL = 60 * 1000;
 
 export const NetworkListener = () => {
   const setStatus = useNetworkStore((s) => s.setStatus);
   const markInitialized = useNetworkStore((s) => s.markInitialized);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const checkNetworkQuality = async () => {
@@ -27,7 +30,12 @@ export const NetworkListener = () => {
       }
     };
 
-    const handleOnline = () => checkNetworkQuality();
+    const handleOnline = () => {
+      queryClient.invalidateQueries({
+        queryKey: tokenKeys.doctor,
+      });
+      checkNetworkQuality();
+    };
     const handleOffline = () => setStatus('offline');
 
     window.addEventListener('online', handleOnline);

@@ -5,6 +5,7 @@ import type {
   DepartmentResponseType,
   DoctorFilterType,
   DoctorsResponseType,
+  TokensResponseType,
 } from '../types';
 import api from './api';
 import { API_END_POINTS } from '../utils/apiEndPoints';
@@ -43,6 +44,11 @@ class KioskService {
     const { data } = await api.get<DoctorsResponseType>(
       `${API_END_POINTS.GET_DOCTORS}?departmentId=${filters.departmentId}`,
     );
+    return data;
+  }
+
+  async getTokens(): Promise<TokensResponseType> {
+    const { data } = await api.get<TokensResponseType>(`${API_END_POINTS.GET_TOKENS}`);
     return data;
   }
 }

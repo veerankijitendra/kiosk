@@ -9,10 +9,11 @@ import InputField from '../../components/common/input/Input';
 import { useLogin } from '../../hooks/mutations/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../utils/routeConstants';
-import { setTokens } from '../../utils/auth';
 import { CloseEye, OpenEye } from '../../components/common/icons';
 import { useState } from 'react';
 import { navigateWithDirection } from '../../utils/commonFunctions';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useKioskStore } from '../../store/useKioskStore';
 
 const Login = () => {
   const {
@@ -24,11 +25,14 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
     defaultValues: {
-      kioskId: 'KA0101',
+      kioskId: 'KISOK-101',
       email: 'admin@anupama.com',
-      password: 'password123',
+      password: '119911',
     },
   });
+
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const clearSession = useKioskStore((state) => state.clearSession);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -39,7 +43,8 @@ const Login = () => {
   const onSubmit = (data: LoginFormType) => {
     mutate(data, {
       onSuccess: (resposne) => {
-        setTokens(resposne.data?.token, resposne.data?.token);
+        setAuth(resposne.data);
+        clearSession();
         navigateWithDirection(navigate, ROUTES.WELCOME, 1);
       },
     });
