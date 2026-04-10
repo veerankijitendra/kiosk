@@ -4,7 +4,7 @@ import type { DoctorFilterType } from '../../types';
 
 export function useDoctors(filter: DoctorFilterType) {
   return useQuery({
-    queryKey: ['doctors'],
+    queryKey: ['doctors', filter],
     queryFn: () => kioskService.getDoctors(filter),
   });
 }

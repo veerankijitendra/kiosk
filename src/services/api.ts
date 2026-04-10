@@ -13,7 +13,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 
 const getApiUrl = (): string => import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
-let isRefreshing: boolean = false;
+const isRefreshing: boolean = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
 
 const subscribeTokenRefresh = (cb: (token: string) => void) => {
@@ -54,72 +54,72 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-api.interceptors.response.use(
-  (res: AxiosResponse) => res,
-  async (error: AxiosError) => {
-    const originalRequest = error.config as CustomAxiosRequestConfig;
+// api.interceptors.response.use(
+//   (res: AxiosResponse) => res,
+//   async (error: AxiosError) => {
+//     const originalRequest = error.config as CustomAxiosRequestConfig;
 
-    if (!originalRequest) {
-      return Promise.reject(error);
-    }
+//     if (!originalRequest) {
+//       return Promise.reject(error);
+//     }
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+//     if (error.response?.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
 
-      if (isRefreshing) {
-        return new Promise((resolve) => {
-          subscribeTokenRefresh((token: string) => {
-            if (originalRequest.headers) {
-              originalRequest.headers.Authorization = `Bearer ${token}`;
-            }
-            resolve(api(originalRequest));
-          });
-        });
-      }
+//       if (isRefreshing) {
+//         return new Promise((resolve) => {
+//           subscribeTokenRefresh((token: string) => {
+//             if (originalRequest.headers) {
+//               originalRequest.headers.Authorization = `Bearer ${token}`;
+//             }
+//             resolve(api(originalRequest));
+//           });
+//         });
+//       }
 
-      isRefreshing = true;
+//       isRefreshing = true;
 
-      try {
-        const url = getApiUrl() + API_END_POINTS.REFRESH;
-        const refreshToken = useAuthStore.getState().refreshToken;
-        const res = await axios.post<{ token: string }>(
-          url,
-          { refreshToken },
-          { withCredentials: true },
-        );
+//       try {
+//         const url = getApiUrl() + API_END_POINTS.REFRESH;
+//         const refreshToken = useAuthStore.getState().refreshToken;
+//         const res = await axios.post<{ token: string }>(
+//           url,
+//           { refreshToken },
+//           { withCredentials: true },
+//         );
 
-        const newToken = res.data.token;
+//         const newToken = res.data.token;
 
-        // setTokens(newToken, newToken);
-        const setAuth = useAuthStore.getState().setAuth;
-        setAuth({ token: newToken });
+//         // setTokens(newToken, newToken);
+//         const setAuth = useAuthStore.getState().setAuth;
+//         setAuth({ token: newToken });
 
-        onRefreshed(newToken);
+//         onRefreshed(newToken);
 
-        if (originalRequest.headers) {
-          originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        }
+//         if (originalRequest.headers) {
+//           originalRequest.headers.Authorization = `Bearer ${newToken}`;
+//         }
 
-        return api(originalRequest);
-      } catch (err) {
-        console.error('Refresh failed', err);
-        const { clearAuth } = useAuthStore.getState();
-        clearAuth();
-        window.location.href = '/';
-        return Promise.reject(err);
-      } finally {
-        isRefreshing = false;
-      }
-    }
+//         return api(originalRequest);
+//       } catch (err) {
+//         console.error('Refresh failed', err);
+//         const { clearAuth } = useAuthStore.getState();
+//         clearAuth();
+//         window.location.href = '/';
+//         return Promise.reject(err);
+//       } finally {
+//         isRefreshing = false;
+//       }
+//     }
 
-    if (error.response?.status === 403) {
-      console.warn('Token expired');
-      const { clearAuth } = useAuthStore.getState();
-      clearAuth();
-      window.location.href = '/';
-    }
-    return Promise.reject(error);
-  },
-);
+//     if (error.response?.status === 403) {
+//       console.warn('Token expired');
+//       const { clearAuth } = useAuthStore.getState();
+//       clearAuth();
+//       window.location.href = '/';
+//     }
+//     return Promise.reject(error);
+//   },
+// );
 
 export default api;

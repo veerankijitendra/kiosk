@@ -19,7 +19,6 @@ import { navigateWithDirection } from '../../utils/commonFunctions';
 import { ROUTES } from '../../utils/routeConstants';
 import { useKioskStore } from '../../store/useKioskStore';
 import { useMultiClick } from '../../hooks/useMultiClick';
-import { clearTokens } from '../../utils/auth';
 
 type DepartmentType = DepartmentResponseType['data'][0];
 
@@ -33,7 +32,6 @@ export default function SelectDepartment() {
   const setDepartment = useKioskStore((state) => state.setDepartment);
 
   const handleLogout = useMultiClick(5, () => {
-    clearTokens();
     navigateWithDirection(navigate, ROUTES.HOME, 1);
   });
 
