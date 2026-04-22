@@ -22,9 +22,12 @@
 import { useNetworkStore } from '../../store/useNetworkStore';
 import './NetworkStatusChip.css';
 import HeartbeatAnimation from '../suspence/Suspence';
+import HomeWelcomeCarousel from '../carousel/Carousel';
+// import { useAds } from '../../hooks/queries/useAds';
 
 export const NetworkStatusChip = () => {
   const { status, showOnlineChip } = useNetworkStore();
+  // const { data } = useAds();
 
   // If offline, show full overlay that blocks interactions
   if (status === 'offline') {
@@ -32,6 +35,7 @@ export const NetworkStatusChip = () => {
       <>
         <div className='network-overlay offline-overlay'>
           <HeartbeatAnimation className='offline-heartbeat' />
+          <HomeWelcomeCarousel items={[]} />
         </div>
         <div className='network-status-chip offline'> No Internet</div>
       </>
