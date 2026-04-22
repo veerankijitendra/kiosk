@@ -25,7 +25,7 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
     defaultValues: {
-      kioskId: 'KISOK-101',
+      kioskId: 'KIOSK-03',
       email: 'admin@anupama.com',
       password: '119911',
     },

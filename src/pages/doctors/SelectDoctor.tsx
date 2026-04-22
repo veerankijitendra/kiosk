@@ -34,6 +34,7 @@ export default function SelectDoctor() {
   const [search, setSearch] = useState('');
   const department = useKioskStore((state) => state.department)!;
   const setDoctor = useKioskStore((state) => state.setDoctor);
+  const doctor = useKioskStore((state) => state.doctor);
   const { data, isLoading } = useDoctors({ departmentId: department?._id || '' });
 
   const doctors: Doctor[] = data?.doctors || [];
@@ -208,7 +209,7 @@ export default function SelectDoctor() {
             </KioskButton.StartIcon>
             <KioskButton.Text>Back</KioskButton.Text>
           </KioskButton.Root>
-          <KioskButton.Root onClick={handleNext} size='large'>
+          <KioskButton.Root disabled={!doctor || isLoading} onClick={handleNext} size='large'>
             <KioskButton.Text>Confirm Selection</KioskButton.Text>
             <KioskButton.EndIcon>
               <ArrowForward />

@@ -1,9 +1,6 @@
 'use client';
 
 import { useState, type JSX } from 'react';
-// import api from '@/services/api';
-// import { useAppDispatch } from '@/store/hooks';
-// import { setSelectedDepartment } from '@/store/slices/tokenSlice';
 import './SelectDepartment.css';
 import { MedicalServices, Search, Stethoscope, ArrowBack } from '../../components/common/icons';
 import * as Icons from '../../components/common/icons';
@@ -125,20 +122,18 @@ export default function SelectDepartment() {
             <div className='select-department__loading'>Loading departments...</div>
           ) : (
             filtered?.map((dept: DepartmentResponseType['data'][0]) => (
-              <>
-                <DepartmentCard.Root key={dept._id} onSelect={handleSelect} department={dept}>
-                  <DepartmentCard.Content className='select-department__card-wrapper__row'>
-                    <DepartmentCard.Icon>
-                      {/* <Stethoscope style={{ fontSize: '2.5rem' }} /> */}
-                      {getIcon(dept.name)}
-                    </DepartmentCard.Icon>
-                    <div>
-                      <DepartmentCard.Title>{dept.name}</DepartmentCard.Title>
-                      <DepartmentCard.Description>{dept.prefix}</DepartmentCard.Description>
-                    </div>
-                  </DepartmentCard.Content>
-                </DepartmentCard.Root>
-              </>
+              <DepartmentCard.Root key={dept._id} onSelect={handleSelect} department={dept}>
+                <DepartmentCard.Content className='select-department__card-wrapper__row'>
+                  <DepartmentCard.Icon>
+                    {/* <Stethoscope style={{ fontSize: '2.5rem' }} /> */}
+                    {getIcon(dept.name)}
+                  </DepartmentCard.Icon>
+                  <div>
+                    <DepartmentCard.Title>{dept.name}</DepartmentCard.Title>
+                    <DepartmentCard.Description>{dept.prefix}</DepartmentCard.Description>
+                  </div>
+                </DepartmentCard.Content>
+              </DepartmentCard.Root>
             ))
           )}
         </div>

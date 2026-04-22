@@ -153,7 +153,7 @@ export default function PatientCheckin() {
                   inputMode='numeric'
                   max={10}
                   onInput={(e) => {
-                    e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '');
+                    e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 10);
                   }}
                 />
                 <InputField.TrailingIcon showWhen='hasValue' onClick={handleClearPhone}>

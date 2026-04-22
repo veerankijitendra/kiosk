@@ -45,7 +45,7 @@ export default function HomeWelcome() {
   return (
     <div className='home-welcome'>
       <header className={'home-welcome__header'} onClick={handleStart}>
-        {isError || isLoading ? (
+        {isError || isLoading || ads.length === 0 ? (
           <div className='home-welcome__ads-loading--container'>
             <p>
               {isLoading ? (
